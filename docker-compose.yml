@@ -1,0 +1,8 @@
+name: pomodoro-timer
+services:
+  pomodoro-timer:
+    image: pomodoro-timer
+    build: .
+    ports:
+      - "4020:80"
+    restart: unless-stopped
