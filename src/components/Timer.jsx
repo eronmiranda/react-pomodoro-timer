@@ -14,18 +14,18 @@ const green = '#4aec8c';
 function Timer() {
   const settingsInfo = useContext(SettingsContext);
 
-  const [isActive, setIsActive] = useState(true);
+  const [isActive, setIsActive] = useState(false);
   const [mode, setMode] = useState('work'); // work or break
   const [secondsLeft, setSecondsLeft] = useState(settingsInfo.workMinutes * 60);
 
   useEffect(() => {
     let interval = null;
 
-    if (!isActive) {
+    if (isActive) {
       interval = setInterval(() => {
         setSecondsLeft((prev) => {
-          if (prev === 0) {
-            // Switch modes when timer hits 0
+          // Switch modes when timer hits 0
+          if (prev === 0) { 
             const nextMode = mode === 'work' ? 'break' : 'work';
             const nextSeconds = (nextMode === 'work' ? settingsInfo.workMinutes : settingsInfo.breakMinutes) * 60;
             setMode(nextMode);
@@ -80,14 +80,17 @@ function Timer() {
       />
       <div style={{ marginTop: '20px' }}>
         {isActive
-          ? <PlayButton onClick={() => { setIsActive(false) }} />
-          : <PauseButton onClick={() => { setIsActive(true) }} />}
+          ? <PauseButton onClick={() => { setIsActive(false) }} />
+          : <PlayButton onClick={() => { setIsActive(true) }} />}
         <StopButton onClick={() => { 
-          setIsActive(true);
+          setIsActive(false);
           setMode('work');
           setSecondsLeft(settingsInfo.workMinutes * 60);
         }} />
-        <NextButton onClick={switchMode} />
+        <NextButton onClick={() => {
+          setIsActive(false);
+          switchMode();
+        }} />
       </div>
       <div style={{ marginTop:'20px' }}>
         <SettingsButton onClick={() => settingsInfo.setShowSettings(true)} />
