@@ -40,6 +40,16 @@ function Timer() {
     return () => clearInterval(interval);
   }, [isActive, mode, settingsInfo]);
 
+  useEffect(() => {
+    const minutes = Math.floor(secondsLeft / 60);
+    const seconds = (secondsLeft % 60).toString().padStart(2, '0');
+    document.title = `${minutes}:${seconds} - ${mode === 'work' ? 'Time to work!' : 'Time to break!'}`;
+
+    return () => {
+      document.title = "Pomodoro Timer";
+    };
+  }, [secondsLeft, mode]);
+
   const totalSeconds = (mode === 'work' 
     ? settingsInfo.workMinutes 
     : settingsInfo.breakMinutes
