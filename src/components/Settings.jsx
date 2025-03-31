@@ -8,7 +8,7 @@ import BackButton from "./BackButton";
 function Settings() {
   const settingsInfo = useContext(SettingsContext);
   return(
-    <div style={{textAlign:'left'}}>
+    <div style={{textAlign:'left', backgroundColor:'rgba(255, 255, 255, 0.1)', padding: '30px', borderRadius: '6px' , marginBottom: '20px' , width: '100%' }}>
       <label>work: {settingsInfo.workMinutes}:00</label>
       <ReactSlider
         className={'slider'}

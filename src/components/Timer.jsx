@@ -68,7 +68,7 @@ function Timer() {
   const seconds = (secondsLeft % 60).toString().padStart(2, '0');
 
   return (
-    <div>
+    <div style={{ backgroundColor:'rgba(255, 255, 255, 0.1)', padding: '30px', borderRadius: '6px' , marginBottom: '20px' , width: '100%'}}>
       <CircularProgressbar
         value={percentage}
         text={`${minutes}:${seconds}`}
