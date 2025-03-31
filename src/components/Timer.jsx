@@ -62,8 +62,7 @@ function Timer() {
     ? settingsInfo.workMinutes 
     : settingsInfo.breakMinutes
   ) * 60;
-  const percentage = Math.round(secondsLeft / totalSeconds * 100);
-
+  const percentage = totalSeconds > 0 ? Math.round((secondsLeft / totalSeconds) * 100) : 0;
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = (secondsLeft % 60).toString().padStart(2, '0');
 
