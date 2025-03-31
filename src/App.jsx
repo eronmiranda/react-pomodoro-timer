@@ -8,7 +8,7 @@ function App() {
 
   const [showSettings, setShowSettings] = useState(false);
   const [workMinutes, setWorkMinutes] = useState(25);
-  const [breakMinutes, setBreakMinutes] = useState(15);
+  const [breakMinutes, setBreakMinutes] = useState(5);
 
   return (
     <main>
