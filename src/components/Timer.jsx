@@ -3,9 +3,10 @@ import 'react-circular-progressbar/dist/styles.css';
 import PlayButton from "./PlayButton";
 import PauseButton from "./PauseButton";
 import SettingsButton from "./SettingsButton";
+import StopButton from './StopButton';
+import NextButton from "./NextButton";
 import {useContext, useState, useEffect} from "react";
 import SettingsContext from "./SettingsContext";
-import StopButton from './StopButton';
 
 const red = '#f54e4e';
 const green = '#4aec8c';
@@ -50,6 +51,13 @@ function Timer() {
     };
   }, [secondsLeft, mode]);
 
+  function switchMode() {
+    const nextMode = mode === 'work' ? 'break' : 'work';
+    const nextSeconds = (nextMode === 'work' ? settingsInfo.workMinutes : settingsInfo.breakMinutes) * 60;
+    setMode(nextMode);
+    setSecondsLeft(nextSeconds);
+  }
+
   const totalSeconds = (mode === 'work' 
     ? settingsInfo.workMinutes 
     : settingsInfo.breakMinutes
@@ -79,6 +87,7 @@ function Timer() {
           setMode('work');
           setSecondsLeft(settingsInfo.workMinutes * 60);
         }} />
+        <NextButton onClick={switchMode} />
       </div>
       <div style={{ marginTop:'20px' }}>
         <SettingsButton onClick={() => settingsInfo.setShowSettings(true)} />
