@@ -16,8 +16,8 @@ function App() {
         showSettings,
         setShowSettings,
         workMinutes,
-        breakMinutes,
         setWorkMinutes,
+        breakMinutes,
         setBreakMinutes,
       }}>
         {showSettings ? <Settings /> : <Timer />}
