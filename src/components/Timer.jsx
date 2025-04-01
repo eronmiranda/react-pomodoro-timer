@@ -5,33 +5,57 @@ import PauseButton from "./PauseButton";
 import SettingsButton from "./SettingsButton";
 import StopButton from './StopButton';
 import NextButton from "./NextButton";
-import {useContext, useState, useEffect} from "react";
+import {useContext, useState, useEffect, useCallback} from "react";
 import SettingsContext from "./SettingsContext";
 
 const red = '#f54e4e';
 const green = '#4aec8c';
+const blue = '#4e9ef5';
 
 function Timer() {
   const settingsInfo = useContext(SettingsContext);
-
   const [isActive, setIsActive] = useState(false);
-  const [mode, setMode] = useState('work'); // work or break
+  const [mode, setMode] = useState('work'); // work, short break, long break
   const [secondsLeft, setSecondsLeft] = useState(settingsInfo.workMinutes * 60);
+  const [sessionCount, setSessionCount] = useState(1);
+
+  const getNextSeconds = useCallback((nextMode = mode) => {
+    return (nextMode === 'work' ? settingsInfo.workMinutes 
+          : nextMode === 'shortBreak' ? settingsInfo.shortBreakMinutes 
+          : settingsInfo.longBreakMinutes) * 60;
+  }, [mode, settingsInfo]);
+
+  const switchMode = useCallback(() => {
+    setSessionCount((prevSessionCount) => {
+      let newSessionCount = prevSessionCount;
+      let nextMode;
+
+      if (mode === 'work') {
+        nextMode = prevSessionCount % 4 === 0 ? 'longBreak' : 'shortBreak';
+      } else {
+        newSessionCount++;
+        nextMode = 'work';
+      }
+  
+      setMode(nextMode);
+      setSecondsLeft(getNextSeconds(nextMode));
+
+      return newSessionCount;
+    });
+  }, [mode, getNextSeconds]);
 
   useEffect(() => {
     let interval = null;
 
     if (isActive) {
       interval = setInterval(() => {
-        setSecondsLeft((prev) => {
+        setSecondsLeft((secondsLeft) => {
           // Switch modes when timer hits 0
-          if (prev === 0) { 
-            const nextMode = mode === 'work' ? 'break' : 'work';
-            const nextSeconds = (nextMode === 'work' ? settingsInfo.workMinutes : settingsInfo.breakMinutes) * 60;
-            setMode(nextMode);
-            return nextSeconds;
+          if (secondsLeft === 0) { 
+            switchMode();
+            return getNextSeconds();
           }
-          return prev - 1;
+          return secondsLeft - 1;
         });
       }, 1000);
     } else {
@@ -39,41 +63,32 @@ function Timer() {
     }
 
     return () => clearInterval(interval);
-  }, [isActive, mode, settingsInfo]);
+  }, [isActive, switchMode, getNextSeconds]);
 
   useEffect(() => {
     const minutes = Math.floor(secondsLeft / 60);
     const seconds = (secondsLeft % 60).toString().padStart(2, '0');
-    document.title = `${minutes}:${seconds} - ${mode === 'work' ? 'Time to work!' : 'Time to break!'}`;
+    document.title = `${minutes}:${seconds} - ${mode === 'work' ? 'Work' : mode === 'shortBreak' ? 'Short Break' : 'Long Break'}`;
 
-    return () => {
-      document.title = "Pomodoro Timer";
-    };
+    return () => { document.title = "Pomodoro Timer"; };
   }, [secondsLeft, mode]);
 
-  function switchMode() {
-    const nextMode = mode === 'work' ? 'break' : 'work';
-    const nextSeconds = (nextMode === 'work' ? settingsInfo.workMinutes : settingsInfo.breakMinutes) * 60;
-    setMode(nextMode);
-    setSecondsLeft(nextSeconds);
-  }
-
-  const totalSeconds = (mode === 'work' 
-    ? settingsInfo.workMinutes 
-    : settingsInfo.breakMinutes
-  ) * 60;
+  const totalSeconds = getNextSeconds();
   const percentage = totalSeconds > 0 ? Math.round((secondsLeft / totalSeconds) * 100) : 0;
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = (secondsLeft % 60).toString().padStart(2, '0');
 
   return (
     <div style={{ backgroundColor:'rgba(255, 255, 255, 0.1)', padding: '30px', borderRadius: '6px' , marginBottom: '20px' , width: '100%'}}>
+      {/* <div>
+        # {sessionCount}
+      </div> */}
       <CircularProgressbar
         value={percentage}
         text={`${minutes}:${seconds}`}
         styles={buildStyles({
           textColor:'#fff',
-          pathColor:mode === 'work' ? red : green,
+          pathColor:mode === 'work' ? red : mode === 'shortBreak' ? green : blue,
           tailColor:'rgba(255,255,255,.2)',
         })}
       />
@@ -85,6 +100,7 @@ function Timer() {
           setIsActive(false);
           setMode('work');
           setSecondsLeft(settingsInfo.workMinutes * 60);
+          setSessionCount(1);
         }} />
         <NextButton onClick={() => {
           setIsActive(false);

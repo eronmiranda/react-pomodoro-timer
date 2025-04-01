@@ -8,7 +8,8 @@ function App() {
 
   const [showSettings, setShowSettings] = useState(false);
   const [workMinutes, setWorkMinutes] = useState(25);
-  const [breakMinutes, setBreakMinutes] = useState(5);
+  const [shortBreakMinutes, setShortBreakMinutes] = useState(5);
+  const [longBreakMinutes, setLongBreakMinutes] = useState(15);
 
   return (
     <main>
@@ -17,8 +18,10 @@ function App() {
         setShowSettings,
         workMinutes,
         setWorkMinutes,
-        breakMinutes,
-        setBreakMinutes,
+        shortBreakMinutes,
+        setShortBreakMinutes,
+        longBreakMinutes,
+        setLongBreakMinutes
       }}>
         {showSettings ? <Settings /> : <Timer />}
       </SettingsContext.Provider>
