@@ -79,7 +79,7 @@ function Timer() {
   const seconds = (secondsLeft % 60).toString().padStart(2, '0');
   console.log("sessionCount:", sessionCount);
   return (
-    <div style={{ backgroundColor:'rgba(255, 255, 255, 0.1)', padding: '30px', borderRadius: '6px' , marginBottom: '20px' , width: '100%'}}>
+    <div style={{ backgroundColor:'rgba(255, 255, 255, 0.1)', padding: '30px 70px', borderRadius: '6px' , marginBottom: '20px' , width: '100%'}}>
       <CircularProgressbar
         value={percentage}
         text={`${minutes}:${seconds}`}
@@ -97,24 +97,36 @@ function Timer() {
           sx={{
             justifyContent: "center",
             alignItems: "center",
+            position: "relative", // Keeps elements positioned correctly
           }}
         >
-          {isActive
-            ? <TimerToggleButton onClick={() => { setIsActive(false) }}>PAUSE</TimerToggleButton>
-            : <TimerToggleButton onClick={() => { setIsActive(true) }}>START</TimerToggleButton>}
+          <TimerToggleButton onClick={() => setIsActive(!isActive)} isActive={isActive} />
           {isActive ? 
-            <StopButton onClick={() => { 
-              setIsActive(false);
-              setMode('work');
-              setSecondsLeft(settingsInfo.workMinutes * 60);
-              setSessionCount(1);
-              }} 
+            <StopButton 
+              onClick={() => { 
+                setIsActive(false);
+                setMode('work');
+                setSecondsLeft(settingsInfo.workMinutes * 60);
+                setSessionCount(1);
+              }}
+              sx={{
+                position: "absolute",
+                right: 20,
+                top: "50%",
+                transform: "translateY(-50%)",
+              }}
             /> : null }
           {isActive ? 
             <NextButton 
               onClick={() => {
-                setIsActive(false);
+                setIsActive(!isActive);
                 switchMode();
+              }}
+              sx={{
+                position: "absolute",
+                right: -30,
+                top: "50%",
+                transform: "translateY(-50%)",
               }}
             /> : null }
         </Stack>
@@ -127,3 +139,4 @@ function Timer() {
 }
 
 export default Timer;
+
