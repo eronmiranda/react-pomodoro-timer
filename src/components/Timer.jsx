@@ -7,8 +7,10 @@ import NextButton from "./NextButton";
 import {useContext, useState, useEffect, useCallback} from "react";
 import SettingsContext from "./SettingsContext";
 import Stack from '@mui/joy/Stack';
+import Sheet from '@mui/joy/Sheet';
+import Box from '@mui/joy/Box';
 
-const red = '#f54e4e';
+const red = '#FF5555';
 const green = '#4aec8c';
 const blue = '#4e9ef5';
 
@@ -79,7 +81,16 @@ function Timer() {
   const seconds = (secondsLeft % 60).toString().padStart(2, '0');
   console.log("sessionCount:", sessionCount);
   return (
-    <div style={{ backgroundColor:'rgba(255, 255, 255, 0.1)', padding: '30px 70px', borderRadius: '6px' , marginBottom: '20px' , width: '100%'}}>
+    <Sheet
+      variant="soft"
+      sx={{
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        padding: '30px 70px',
+        borderRadius: '6px',
+        marginBottom: '20px',
+        width: '100%'
+      }}
+    >
       <CircularProgressbar
         value={percentage}
         text={`${minutes}:${seconds}`}
@@ -90,17 +101,18 @@ function Timer() {
         })}
       />
 
-      <div style={{ marginTop: '20px' }}>
+      <Box sx={{ mt: 2 }}>
         <Stack
           direction="row"
           spacing={2}
           sx={{
             justifyContent: "center",
             alignItems: "center",
-            position: "relative", // Keeps elements positioned correctly
+            position: "relative",
           }}
         >
           <TimerToggleButton onClick={() => setIsActive(!isActive)} isActive={isActive} />
+
           {isActive ? 
             <StopButton 
               onClick={() => { 
@@ -115,7 +127,9 @@ function Timer() {
                 top: "50%",
                 transform: "translateY(-50%)",
               }}
-            /> : null }
+            /> 
+            : null }
+
           {isActive ? 
             <NextButton 
               onClick={() => {
@@ -130,11 +144,11 @@ function Timer() {
               }}
             /> : null }
         </Stack>
-      </div>
-      <div style={{ marginTop:'20px' }}>
+      </Box>
+      <Box sx={{ mt: 2 }}>
         <SettingsButton onClick={() => settingsInfo.setShowSettings(true)} />
-      </div>
-    </div>
+      </Box>
+    </Sheet>
   );
 }
 
