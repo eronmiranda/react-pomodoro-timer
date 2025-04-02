@@ -1,12 +1,12 @@
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import PlayButton from "./PlayButton";
-import PauseButton from "./PauseButton";
+import TimerToggleButton from "./TimerToggleButton";
 import SettingsButton from "./SettingsButton";
 import StopButton from './StopButton';
 import NextButton from "./NextButton";
 import {useContext, useState, useEffect, useCallback} from "react";
 import SettingsContext from "./SettingsContext";
+import Stack from '@mui/joy/Stack';
 
 const red = '#f54e4e';
 const green = '#4aec8c';
@@ -77,12 +77,9 @@ function Timer() {
   const percentage = totalSeconds > 0 ? Math.round((secondsLeft / totalSeconds) * 100) : 0;
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = (secondsLeft % 60).toString().padStart(2, '0');
-
+  console.log("sessionCount:", sessionCount);
   return (
     <div style={{ backgroundColor:'rgba(255, 255, 255, 0.1)', padding: '30px', borderRadius: '6px' , marginBottom: '20px' , width: '100%'}}>
-      {/* <div>
-        # {sessionCount}
-      </div> */}
       <CircularProgressbar
         value={percentage}
         text={`${minutes}:${seconds}`}
@@ -92,20 +89,35 @@ function Timer() {
           tailColor:'rgba(255,255,255,.2)',
         })}
       />
+
       <div style={{ marginTop: '20px' }}>
-        {isActive
-          ? <PauseButton onClick={() => { setIsActive(false) }} />
-          : <PlayButton onClick={() => { setIsActive(true) }} />}
-        <StopButton onClick={() => { 
-          setIsActive(false);
-          setMode('work');
-          setSecondsLeft(settingsInfo.workMinutes * 60);
-          setSessionCount(1);
-        }} />
-        <NextButton onClick={() => {
-          setIsActive(false);
-          switchMode();
-        }} />
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {isActive
+            ? <TimerToggleButton onClick={() => { setIsActive(false) }}>PAUSE</TimerToggleButton>
+            : <TimerToggleButton onClick={() => { setIsActive(true) }}>START</TimerToggleButton>}
+          {isActive ? 
+            <StopButton onClick={() => { 
+              setIsActive(false);
+              setMode('work');
+              setSecondsLeft(settingsInfo.workMinutes * 60);
+              setSessionCount(1);
+              }} 
+            /> : null }
+          {isActive ? 
+            <NextButton 
+              onClick={() => {
+                setIsActive(false);
+                switchMode();
+              }}
+            /> : null }
+        </Stack>
       </div>
       <div style={{ marginTop:'20px' }}>
         <SettingsButton onClick={() => settingsInfo.setShowSettings(true)} />

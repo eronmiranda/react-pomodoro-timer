@@ -1,9 +1,15 @@
+import IconButton from '@mui/joy/IconButton';
 import SkipNextRoundedIcon from '@mui/icons-material/SkipNextRounded';
+
 function NextButton(props) {
   return (
-    <button {...props}>
-      <SkipNextRoundedIcon sx={{ fontSize: 95 }} />
-    </button>
+    <IconButton 
+      variant="soft" 
+      color="primary" 
+      {...props}
+    >
+      <SkipNextRoundedIcon />
+    </IconButton>
   );
 }
 

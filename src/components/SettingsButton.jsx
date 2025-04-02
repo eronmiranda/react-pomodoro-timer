@@ -1,11 +1,19 @@
+import Button from '@mui/joy/Button';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 function SettingsButton(props) {
   return (
-    <button {...props} className={'with-text'}>
-      <SettingsIcon fontSize="large" />
+    <Button 
+      size="md" 
+      variant="solid" 
+      startDecorator={<SettingsIcon />} 
+      color="warning"
+      sx={{
+        "--Button-gap": "5px"
+      }} 
+      {...props} >
       Settings
-    </button>
+    </Button>
   );
 }
 

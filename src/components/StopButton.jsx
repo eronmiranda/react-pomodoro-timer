@@ -1,10 +1,15 @@
-import StopCircleRoundedIcon from '@mui/icons-material/StopCircleRounded';
+import IconButton from '@mui/joy/IconButton';
+import StopIcon from '@mui/icons-material/Stop';
 
 function StopButton(props) {
   return (
-    <button {...props}>
-      <StopCircleRoundedIcon sx={{ fontSize: 95 }} />
-    </button>
+    <IconButton 
+    variant="soft" 
+    color="danger" 
+    {...props}
+    >
+      <StopIcon />
+    </IconButton>
   )
 }
 
