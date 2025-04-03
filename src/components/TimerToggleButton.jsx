@@ -12,12 +12,18 @@ function TimerToggleButton({ isActive, ...props }) {
         borderRadius: "10px",
         width: "200px",
         height: "60px",
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-        backgroundColor: isActive ? "#FF5555" : "#4CAF50",
-        color: "white",
-        transition: "background-color 0.3s",
+        boxShadow: isActive ? "inset 0px 3px 4px rgba(0, 0, 0, 0.2)" : "0px 6px 0px #D18480",
+        transform: isActive ? "translateY(6px)" : "translateY(0px)",
+        backgroundColor: "white",
+        color: "#A3524E",
+        border: "none",
+        transition: "all 0.2s",
         "&:hover": {
-          backgroundColor: isActive ? "#E04E4E" : "#45A049",
+          backgroundColor: "#F8F8F8",
+        },
+        "&:active": {
+          boxShadow: isActive ? "inset 0px 3px 4px rgba(0, 0, 0, 0.2)" : "0px 3px 0px #D18480",
+          transform: "translateY(3px)",
         },
       }}
       {...props}
