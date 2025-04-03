@@ -1,6 +1,6 @@
 import Button from '@mui/joy/Button';
 
-function TimerToggleButton({ isActive, ...props }) {
+function PomodoroButton({ isActive, ...props }) {
   return (
     <Button
       variant="solid"
@@ -33,4 +33,4 @@ function TimerToggleButton({ isActive, ...props }) {
   );
 }
 
-export default TimerToggleButton;
+export default PomodoroButton;

@@ -1,6 +1,6 @@
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import TimerToggleButton from "./TimerToggleButton";
+import PomodoroButton from "./PomodoroButton";
 import SettingsButton from "./SettingsButton";
 import StopButton from './StopButton';
 import NextButton from "./NextButton";
@@ -111,7 +111,7 @@ function Timer() {
             position: "relative",
           }}
         >
-          <TimerToggleButton onClick={() => setIsActive(!isActive)} isActive={isActive} />
+          <PomodoroButton onClick={() => setIsActive(!isActive)} isActive={isActive} />
 
           {isActive && (
             <>
