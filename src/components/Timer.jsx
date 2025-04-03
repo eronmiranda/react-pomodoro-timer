@@ -113,36 +113,36 @@ function Timer() {
         >
           <TimerToggleButton onClick={() => setIsActive(!isActive)} isActive={isActive} />
 
-          {isActive ? 
-            <StopButton 
-              onClick={() => { 
-                setIsActive(false);
-                setMode('work');
-                setSecondsLeft(settingsInfo.workMinutes * 60);
-                setSessionCount(1);
-              }}
-              sx={{
-                position: "absolute",
-                right: 20,
-                top: "50%",
-                transform: "translateY(-50%)",
-              }}
-            /> 
-            : null }
-
-          {isActive ? 
-            <NextButton 
-              onClick={() => {
-                setIsActive(!isActive);
-                switchMode();
-              }}
-              sx={{
-                position: "absolute",
-                right: -30,
-                top: "50%",
-                transform: "translateY(-50%)",
-              }}
-            /> : null }
+          {isActive && (
+            <>
+              <StopButton 
+                onClick={() => { 
+                  setIsActive(false);
+                  setMode('work');
+                  setSecondsLeft(settingsInfo.workMinutes * 60);
+                  setSessionCount(1);
+                }}
+                sx={{
+                  position: "absolute",
+                  right: 20,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                }}
+              />
+              <NextButton 
+                onClick={() => {
+                  setIsActive(!isActive);
+                  switchMode();
+                }}
+                sx={{
+                  position: "absolute",
+                  right: -30,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                }}
+              />
+            </>
+          )}
         </Stack>
       </Box>
       <Box sx={{ mt: 2 }}>
