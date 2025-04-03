@@ -53,8 +53,14 @@ const inputStyles = {
     paddingRight: '2px',
     fontSize: '1rem',
     fontWeight: 600,
+    // Remove arrows for other browsers
+    '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+      '-webkit-appearance': 'none',
+      margin: 0
+    },
+    // Remove arrows for Firefox
     '&[type=number]': {
-      'MozAppearance': 'textfield'
+      '-moz-appearance': 'textfield'
     }
   }
 };
