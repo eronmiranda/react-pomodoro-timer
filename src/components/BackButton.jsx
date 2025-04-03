@@ -1,19 +1,26 @@
-import Button from '@mui/joy/Button';
-import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import IconButton from '@mui/joy/IconButton';
+import ArrowBack from '@mui/icons-material/ArrowBack';
 
 function BackButton(props) {
   return (
-    <Button 
-      size="lg" 
-      variant="soft" 
-      startDecorator={<ArrowBackRoundedIcon />} 
-      color="warning"
+    <IconButton
+      onClick={props.onClick}
+      variant="plain"
       sx={{
-        "--Button-gap": "5px",
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        borderRadius: '50%',
+        width: '45px',
+        height: '45px',
+        color: 'white',
+        transition: 'all 0.3s ease',
+        '&:hover': {
+          backgroundColor: 'rgba(255, 255, 255, 0.2)',
+          transform: 'scale(1.1)',
+        }
       }}
-      {...props} >
-      Back
-    </Button>
+    >
+      <ArrowBack />
+    </IconButton>
   );
 }
 
