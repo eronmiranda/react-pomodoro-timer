@@ -55,12 +55,12 @@ const inputStyles = {
     fontWeight: 600,
     // Remove arrows for other browsers
     '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-      '-webkit-appearance': 'none',
+      'WebkitAppearance': 'none',
       margin: 0
     },
     // Remove arrows for Firefox
     '&[type=number]': {
-      '-moz-appearance': 'textfield'
+      'MozAppearance': 'textfield'
     }
   }
 };
