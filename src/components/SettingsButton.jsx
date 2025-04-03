@@ -12,10 +12,13 @@ function SettingsButton(props) {
         width: '45px',
         height: '45px',
         color: 'white',
-        transition: 'all 0.3s ease',
+        transition: 'all 0.2s ease-in-out',
         '&:hover': {
           backgroundColor: 'rgba(255, 255, 255, 0.2)',
           transform: 'scale(1.1)',
+        },
+        '&:active': {
+          transform: 'translateY(4px)',
         }
       }}
     >
