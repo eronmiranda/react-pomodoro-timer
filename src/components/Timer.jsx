@@ -72,12 +72,9 @@ function Timer() {
   }, [isActive, switchMode]);
 
   useEffect(() => {
-    const minutes = Math.floor(secondsLeft / 60);
-    const seconds = (secondsLeft % 60).toString().padStart(2, '0');
     document.title = `${minutes}:${seconds} - ${mode === 'work' ? 'Work' : mode === 'shortBreak' ? 'Short Break' : 'Long Break'}`;
-
     return () => { document.title = "Pomodoro Timer"; };
-  }, [secondsLeft, mode]);
+  }, [minutes, seconds, mode]);
 
   console.log("sessionCount:", sessionCount);
   return (
