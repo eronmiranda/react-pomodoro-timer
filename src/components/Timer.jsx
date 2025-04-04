@@ -76,7 +76,18 @@ function Timer() {
     return () => { document.title = "Pomodoro Timer"; };
   }, [minutes, seconds, mode]);
 
-  console.log("sessionCount:", sessionCount);
+  const handleStop = () => {
+    setIsActive(!isActive);
+    setMode('work');
+    setSecondsLeft(settingsInfo.workMinutes * 60);
+    setSessionCount(1);
+  };
+
+  const handleNext = () => {
+    setIsActive(!isActive);
+    switchMode();
+  };
+
   return (
     <Sheet
       variant="soft"
@@ -118,12 +129,7 @@ function Timer() {
           {isActive && (
             <>
               <StopButton 
-                onClick={() => { 
-                  setIsActive(false);
-                  setMode('work');
-                  setSecondsLeft(settingsInfo.workMinutes * 60);
-                  setSessionCount(1);
-                }}
+                onClick={handleStop}
                 sx={{
                   position: "absolute",
                   right: 20,
@@ -132,10 +138,7 @@ function Timer() {
                 }}
               />
               <NextButton 
-                onClick={() => {
-                  setIsActive(!isActive);
-                  switchMode();
-                }}
+                onClick={handleNext}
                 sx={{
                   position: "absolute",
                   right: -30,
@@ -155,4 +158,3 @@ function Timer() {
 }
 
 export default Timer;
-
