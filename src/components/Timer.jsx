@@ -36,52 +36,40 @@ function Timer() {
     return { minutes: mins, seconds: secs, percentage: perc };
   }, [secondsLeft, mode, settingsInfo]);
 
-  const getNextSeconds = useCallback((nextMode = mode) => {
-    return (nextMode === 'work' ? settingsInfo.workMinutes 
-          : nextMode === 'shortBreak' ? settingsInfo.shortBreakMinutes 
-          : settingsInfo.longBreakMinutes) * 60;
-  }, [mode, settingsInfo]);
-
   const switchMode = useCallback(() => {
-    setSessionCount((prevSessionCount) => {
-      let newSessionCount = prevSessionCount;
-      let nextMode;
+    const nextMode = mode === 'work'
+      ? sessionCount % 4 === 0 ? 'longBreak' : 'shortBreak'
+      : 'work';
 
-      if (mode === 'work') {
-        nextMode = prevSessionCount % 4 === 0 ? 'longBreak' : 'shortBreak';
-        audioRef.current.play();
-      } else {
-        newSessionCount++;
-        nextMode = 'work';
-      }
-  
-      setMode(nextMode);
-      setSecondsLeft(getNextSeconds(nextMode));
+    const nextSeconds = nextMode === 'work' ? settingsInfo.workMinutes * 60
+      : nextMode === 'shortBreak' ? settingsInfo.shortBreakMinutes * 60
+      : settingsInfo.longBreakMinutes * 60;
 
-      return newSessionCount;
-    });
-  }, [mode, getNextSeconds]);
+    if (mode === 'work') {
+      audioRef.current.play();
+    }
+
+    setMode(nextMode);
+    setSecondsLeft(nextSeconds);
+    setSessionCount(count => mode === 'work' ? count : count + 1);
+  }, [mode, sessionCount, settingsInfo]);
 
   useEffect(() => {
     let interval = null;
 
     if (isActive) {
       interval = setInterval(() => {
-        setSecondsLeft((secondsLeft) => {
-          // Switch modes when timer hits 0
-          if (secondsLeft === 0) { 
+        setSecondsLeft(currentSeconds => {
+          if (currentSeconds === 0) {
             switchMode();
-            return getNextSeconds();
+            return currentSeconds;
           }
-          return secondsLeft - 1;
+          return currentSeconds - 1;
         });
       }, 1000);
-    } else {
-      clearInterval(interval);
     }
-
     return () => clearInterval(interval);
-  }, [isActive, switchMode, getNextSeconds]);
+  }, [isActive, switchMode]);
 
   useEffect(() => {
     const minutes = Math.floor(secondsLeft / 60);
