@@ -4,7 +4,7 @@ import PomodoroButton from "./PomodoroButton";
 import SettingsButton from "./SettingsButton";
 import StopButton from './StopButton';
 import NextButton from "./NextButton";
-import {useContext, useState, useEffect, useCallback, useRef} from "react";
+import {useContext, useState, useEffect, useCallback, useRef, useMemo} from "react";
 import SettingsContext from "./SettingsContext";
 import Stack from '@mui/joy/Stack';
 import Sheet from '@mui/joy/Sheet';
@@ -23,6 +23,18 @@ function Timer() {
   const [secondsLeft, setSecondsLeft] = useState(settingsInfo.workMinutes * 60);
   const [sessionCount, setSessionCount] = useState(1);
   const audioRef = useRef(new Audio('/sounds/work-tone.mp3'));
+
+  // time calculations
+  const { minutes, seconds, percentage } = useMemo(() => {
+    const mins = Math.floor(secondsLeft / 60);
+    const secs = (secondsLeft % 60).toString().padStart(2, '0');
+    const totalSeconds = mode === 'work' ? settingsInfo.workMinutes * 60 
+                : mode === 'shortBreak' ? settingsInfo.shortBreakMinutes * 60 
+                : settingsInfo.longBreakMinutes * 60;
+    const perc = totalSeconds > 0 ? Math.round((secondsLeft / totalSeconds) * 100) : 0;
+    
+    return { minutes: mins, seconds: secs, percentage: perc };
+  }, [secondsLeft, mode, settingsInfo]);
 
   const getNextSeconds = useCallback((nextMode = mode) => {
     return (nextMode === 'work' ? settingsInfo.workMinutes 
@@ -79,10 +91,6 @@ function Timer() {
     return () => { document.title = "Pomodoro Timer"; };
   }, [secondsLeft, mode]);
 
-  const totalSeconds = getNextSeconds();
-  const percentage = totalSeconds > 0 ? Math.round((secondsLeft / totalSeconds) * 100) : 0;
-  const minutes = Math.floor(secondsLeft / 60);
-  const seconds = (secondsLeft % 60).toString().padStart(2, '0');
   console.log("sessionCount:", sessionCount);
   return (
     <Sheet
