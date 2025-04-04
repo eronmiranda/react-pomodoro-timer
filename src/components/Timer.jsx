@@ -10,9 +10,9 @@ import Stack from '@mui/joy/Stack';
 import Sheet from '@mui/joy/Sheet';
 import Box from '@mui/joy/Box';
 
-const red = '#FF5555';
-const green = '#4aec8c';
-const blue = '#4e9ef5';
+const red = '#ba4949';
+const green = '#518a58';
+const blue = '#397097';
 
 function Timer() {
   const settingsInfo = useContext(SettingsContext);
@@ -84,6 +84,7 @@ function Timer() {
     <Sheet
       variant="soft"
       sx={{
+        fontFamily: 'Arial Rounded MT Bold',
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         padding: '30px 70px',
         borderRadius: '6px',
@@ -111,7 +112,11 @@ function Timer() {
             position: "relative",
           }}
         >
-          <PomodoroButton onClick={() => setIsActive(!isActive)} isActive={isActive} />
+          <PomodoroButton 
+            onClick={() => setIsActive(!isActive)} 
+            isActive={isActive}
+            color={mode === 'work' ? red : mode === 'shortBreak' ? green : blue}
+          />
 
           {isActive && (
             <>

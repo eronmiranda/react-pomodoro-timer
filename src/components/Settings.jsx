@@ -12,19 +12,19 @@ const timerSettings = [
     label: 'Work',
     value: 'workMinutes',
     setValue: 'setWorkMinutes',
-    color: 'rgb(245, 78, 78)'
+    color: '#ba4949'
   },
   {
     label: 'Short Break',
     value: 'shortBreakMinutes',
     setValue: 'setShortBreakMinutes',
-    color: 'rgb(74, 236, 140)'
+    color: '#518a58'
   },
   {
     label: 'Long Break',
     value: 'longBreakMinutes',
     setValue: 'setLongBreakMinutes',
-    color: 'rgb(78, 158, 245)'
+    color: '#397097'
   }
 ];
 
