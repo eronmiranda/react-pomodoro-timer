@@ -4,7 +4,7 @@ import PomodoroButton from "./PomodoroButton";
 import SettingsButton from "./SettingsButton";
 import StopButton from './StopButton';
 import NextButton from "./NextButton";
-import {useContext, useState, useEffect, useCallback} from "react";
+import {useContext, useState, useEffect, useCallback, useRef} from "react";
 import SettingsContext from "./SettingsContext";
 import Stack from '@mui/joy/Stack';
 import Sheet from '@mui/joy/Sheet';
@@ -20,6 +20,7 @@ function Timer() {
   const [mode, setMode] = useState('work'); // work, short break, long break
   const [secondsLeft, setSecondsLeft] = useState(settingsInfo.workMinutes * 60);
   const [sessionCount, setSessionCount] = useState(1);
+  const audioRef = useRef(new Audio('/sounds/work-tone.mp3'));
 
   const getNextSeconds = useCallback((nextMode = mode) => {
     return (nextMode === 'work' ? settingsInfo.workMinutes 
@@ -34,6 +35,7 @@ function Timer() {
 
       if (mode === 'work') {
         nextMode = prevSessionCount % 4 === 0 ? 'longBreak' : 'shortBreak';
+        audioRef.current.play();
       } else {
         newSessionCount++;
         nextMode = 'work';
