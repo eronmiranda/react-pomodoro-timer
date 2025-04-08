@@ -6,6 +6,7 @@ import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
 import Slider from '@mui/joy/Slider';
 import Input from '@mui/joy/Input';
+import Box from '@mui/joy/Box';
 
 const timerSettings = [
   {
@@ -30,28 +31,58 @@ const timerSettings = [
 
 const sliderStyles = (color) => ({
   width: '100%',
-  padding: '10px 0',
+  padding: {
+    xs: '8px 0',
+    sm: '12px 0'
+  },
   '& .MuiSlider-thumb': {
+    width: {
+      xs: '16px',
+      sm: '20px'
+    },
+    height: {
+      xs: '16px',
+      sm: '20px'
+    },
     border: '2px solid white',
     backgroundColor: color,
+    '&:hover, &.Mui-focusVisible': {
+      boxShadow: `0 0 0 8px ${color}33`
+    }
   },
   '& .MuiSlider-track': {
-    backgroundColor: color,
     border: 'none',
+    height: {
+      xs: '4px',
+      sm: '6px'
+    }
+  },
+  '& .MuiSlider-rail': {
+    opacity: 0.25,
+    backgroundColor: '#ffffff'
   },
 });
 
 const inputStyles = {
-  width: '80px',
+  width: {
+    xs: '60px',
+    sm: '80px'
+  },
   backgroundColor: 'rgba(0,0,0,0.2)',
   color: 'white',
   '--Input-gap': '0px',
-  '--Input-minHeight': '32px',
+  '--Input-minHeight': {
+    xs: '28px',
+    sm: '32px'
+  },
   '& input': {
     color: 'white',
     textAlign: 'right',
     paddingRight: '2px',
-    fontSize: '1rem',
+    fontSize: {
+      xs: '0.875rem',
+      sm: '1rem'
+    },
     fontWeight: 600,
     // Remove arrows for other browsers
     '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
@@ -79,27 +110,54 @@ function Settings() {
       sx={{
         textAlign: 'left',
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        padding: '30px 70px',
+        padding: {
+          xs: '16px 12px', 
+          sm: '20px 16px'
+        },
         borderRadius: '6px',
         marginBottom: '20px',
-        width: '100%'
+        width: '100%',
+        minHeight: {
+          xs: '350px',
+          sm: '400px'
+        },
+        boxSizing: 'border-box',
+        overflow: 'hidden'
       }}
     >
-      <Stack spacing={4}>
+      <Stack 
+        spacing={{ xs: 2, sm: 3 }} 
+        sx={{ 
+          width: '100%',
+          boxSizing: 'border-box'
+        }}
+      >
         {timerSettings.map(({ label, value, setValue, color }) => (
-          <Stack key={value} spacing={2}>
+          <Stack 
+            key={value} 
+            spacing={{ xs: 1, sm: 1.5 }}
+            sx={{ width: '100%' }}
+          >
             <Typography 
               level='h4' 
               sx={{ 
                 color: 'rgb(255, 255, 255)',
                 letterSpacing: '0.5px',
+                fontSize: {
+                  xs: '1rem',
+                  sm: '1.2rem'
+                }
               }}
             >
               {label}
             </Typography>
             <Stack 
-              direction='row' 
-              spacing={2}
+              direction={{ xs: 'column', sm: 'row' }}
+              spacing={{ xs: 1, sm: 2 }}
+              sx={{ 
+                width: '100%',
+                boxSizing: 'border-box'
+              }}
             >
               <Input
                 type='number'
@@ -110,6 +168,11 @@ function Settings() {
                   ...inputStyles,
                   '--Input-focusedHighlight': color,
                   '&:hover': { borderColor: color },
+                  width: {
+                    xs: '100%',
+                    sm: '80px'
+                  },
+                  flexShrink: 0
                 }}
                 slotProps={{
                   input: {
@@ -119,18 +182,21 @@ function Settings() {
                   },
                 }}
               />
-              <Slider
-                value={settingsInfo[value]}
-                onChange={(_, newValue) => handleValueChange(setValue, newValue)}
-                min={1}
-                max={120}
-                sx={{
-                  ...sliderStyles(color),
-                  flex: 1
-                }}
-                size='lg'
-              />
-
+              <Box sx={{ 
+                flex: 1,
+                minWidth: 0
+              }}>
+                <Slider
+                  value={settingsInfo[value]}
+                  onChange={(_, newValue) => handleValueChange(setValue, newValue)}
+                  min={1}
+                  max={120}
+                  sx={sliderStyles(color)}
+                  size='lg'
+                  marks={false}
+                  valueLabelDisplay='auto'
+                />
+              </Box>
             </Stack>
           </Stack>
         ))}
@@ -138,6 +204,9 @@ function Settings() {
         <Stack 
           direction='row' 
           justifyContent='center'
+          sx={{
+            mt: { xs: 2, sm: 3 }
+          }}
         >
           <BackButton onClick={() => settingsInfo.setShowSettings(!settingsInfo.setShowSettings)} />
         </Stack>
