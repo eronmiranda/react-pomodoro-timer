@@ -90,6 +90,7 @@ function Timer() {
     setIsActive(!isActive);
     switchMode();
   };
+  
   const handleModeChange = (event, newMode) => {
     settingsInfo.setMode(newMode);
     setSecondsLeft(
@@ -98,6 +99,18 @@ function Timer() {
       settingsInfo.longBreakMinutes * 60
     );
   };
+
+  const handleSpaceKey = useCallback((event) => {
+    if (event.code === 'Space') {
+      event.preventDefault();
+      setIsActive(!isActive);
+    }
+  }, [isActive]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleSpaceKey);
+    return () => document.removeEventListener('keydown', handleSpaceKey);
+  }, [handleSpaceKey]);
 
   return (
     <Sheet
@@ -214,6 +227,7 @@ function Timer() {
                 onClick={() => setIsActive(!isActive)} 
                 isActive={isActive}
                 color={COLORS[settingsInfo.mode]}
+                aria-label={`${isActive ? 'Pause' : 'Start'} timer (Space)`}
               />
               <NextButton onClick={handleNext} />
             </>
@@ -222,6 +236,7 @@ function Timer() {
               onClick={() => setIsActive(!isActive)} 
               isActive={isActive}
               color={COLORS[settingsInfo.mode]}
+              aria-label={`${isActive ? 'Pause' : 'Start'} timer (Space)`}
             />
           )}
         </Stack>
