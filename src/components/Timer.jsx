@@ -12,6 +12,7 @@ import LinearProgress from '@mui/joy/LinearProgress';
 import Tabs from '@mui/joy/Tabs';
 import TabList from '@mui/joy/TabList';
 import Tab from '@mui/joy/Tab';
+import TimerDisplay from './TimerDisplay';
 
 const COLORS = {
   work: '#ba4949',
@@ -180,28 +181,7 @@ function Timer() {
         />
       </Box>
 
-      <Box 
-        sx={{
-          textAlign: 'center',
-          color: '#fff',
-          fontSize: {
-            xs: '4rem',
-            sm: '5.5rem',
-            md: '7rem'
-          },
-          fontWeight: 'bold',
-          mb: {
-            xs: 2,
-            sm: 4
-          },
-          letterSpacing: {
-            xs: '2px',
-            sm: '4px'
-          }
-        }}
-      >
-        {`${minutes}:${seconds}`}
-      </Box>
+      <TimerDisplay minutes={minutes} seconds={seconds}/>
 
       <Box 
         sx={{ 
