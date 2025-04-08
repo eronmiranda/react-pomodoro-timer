@@ -168,48 +168,51 @@ function Timer() {
         {`${minutes}:${seconds}`}
       </Box>
 
-      <Box sx={{ mt: 2 }}>
-        <Stack
-          direction="row"
-          spacing={2}
+      <Box sx={{ mt: 2, position: 'relative', width: '100%' }}>
+        {/* Main button container */}
+        <Box
           sx={{
-            justifyContent: "center",
-            alignItems: "center",
-            position: "relative",
+            position: 'relative',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            mb: 4
           }}
         >
-          <PomodoroButton 
-            onClick={() => setIsActive(!isActive)} 
-            isActive={isActive}
-            color={COLORS[settingsInfo.mode]}
-          />
+          <Box sx={{ position: 'relative' }}>
+            <PomodoroButton 
+              onClick={() => setIsActive(!isActive)} 
+              isActive={isActive}
+              color={COLORS[settingsInfo.mode]}
+            />
+          </Box>
 
           {isActive && (
-            <>
-              <StopButton 
-                onClick={handleStop}
-                sx={{
-                  position: "absolute",
-                  right: 20,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                }}
-              />
-              <NextButton 
-                onClick={handleNext}
-                sx={{
-                  position: "absolute",
-                  right: -30,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                }}
-              />
-            </>
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{
+                position: 'absolute',
+                right: '50%',
+                transform: 'translateX(230px)',
+                display: 'flex',
+                alignItems: 'center',
+                height: '100%'
+              }}
+            >
+              <StopButton onClick={handleStop} />
+              <NextButton onClick={handleNext} />
+            </Stack>
           )}
-        </Stack>
-      </Box>
-      <Box sx={{ mt: 2 }}>
-        <SettingsButton onClick={() => settingsInfo.setShowSettings(true)} />
+        </Box>
+        <Box 
+          sx={{ 
+            display: 'flex',
+            justifyContent: 'center'
+          }}
+        >
+          <SettingsButton onClick={() => settingsInfo.setShowSettings(true)} />
+        </Box>
       </Box>
     </Sheet>
   );
