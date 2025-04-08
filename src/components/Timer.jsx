@@ -80,7 +80,7 @@ function Timer() {
   }, [minutes, seconds, settingsInfo.mode]);
 
   const handleStop = () => {
-    setIsActive(!isActive);
+    setIsActive(false);
     settingsInfo.setMode('work');
     setSecondsLeft(settingsInfo.workMinutes * 60);
     setSessionCount(1);
@@ -90,14 +90,15 @@ function Timer() {
     setIsActive(!isActive);
     switchMode();
   };
-  
+
   const handleModeChange = (event, newMode) => {
     settingsInfo.setMode(newMode);
     setSecondsLeft(
-      newMode === 'work' ? settingsInfo.workMinutes * 60 :
-      newMode === 'shortBreak' ? settingsInfo.shortBreakMinutes * 60 :
-      settingsInfo.longBreakMinutes * 60
+      newMode === 'work' ? settingsInfo.workMinutes * 60 
+      : newMode === 'shortBreak' ? settingsInfo.shortBreakMinutes * 60 
+      : settingsInfo.longBreakMinutes * 60
     );
+    setIsActive(false);
   };
 
   const handleSpaceKey = useCallback((event) => {
@@ -240,7 +241,6 @@ function Timer() {
             />
           )}
         </Stack>
-
         <SettingsButton onClick={() => settingsInfo.setShowSettings(true)} />
       </Box>
     </Sheet>
