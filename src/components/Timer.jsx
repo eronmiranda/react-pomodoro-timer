@@ -53,9 +53,11 @@ function Timer() {
       audioRef.current.play();
     }
 
-    settingsInfo.setMode(nextMode);
-    setSecondsLeft(nextSeconds);
-    setSessionCount(count => settingsInfo.mode === 'work' ? count : count + 1);
+    setTimeout(() => {
+      settingsInfo.setMode(nextMode);
+      setSecondsLeft(nextSeconds);
+      setSessionCount(count => settingsInfo.mode === 'work' ? count : count + 1);
+    }, 0);
   }, [sessionCount, settingsInfo]);
 
   useEffect(() => {
