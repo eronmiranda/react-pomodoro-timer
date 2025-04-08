@@ -1,4 +1,3 @@
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import PomodoroButton from "./PomodoroButton";
 import SettingsButton from "./SettingsButton";
@@ -9,6 +8,10 @@ import SettingsContext from "./SettingsContext";
 import Stack from '@mui/joy/Stack';
 import Sheet from '@mui/joy/Sheet';
 import Box from '@mui/joy/Box';
+import LinearProgress from '@mui/joy/LinearProgress';
+import Tabs from '@mui/joy/Tabs';
+import TabList from '@mui/joy/TabList';
+import Tab from '@mui/joy/Tab';
 
 const COLORS = {
   work: '#ba4949',
@@ -31,7 +34,7 @@ function Timer() {
     const totalSeconds = mode === 'work' ? settingsInfo.workMinutes * 60 
                 : mode === 'shortBreak' ? settingsInfo.shortBreakMinutes * 60 
                 : settingsInfo.longBreakMinutes * 60;
-    const perc = totalSeconds > 0 ? Math.round((secondsLeft / totalSeconds) * 100) : 0;
+    const perc = totalSeconds > 0 ? 100 - Math.round((secondsLeft / totalSeconds) * 100) : 0;
     
     return { minutes: mins, seconds: secs, percentage: perc };
   }, [secondsLeft, mode, settingsInfo]);
@@ -87,6 +90,14 @@ function Timer() {
     setIsActive(!isActive);
     switchMode();
   };
+  const handleModeChange = (event, newMode) => {
+    setMode(newMode);
+    setSecondsLeft(
+      newMode === 'work' ? settingsInfo.workMinutes * 60 :
+      newMode === 'shortBreak' ? settingsInfo.shortBreakMinutes * 60 :
+      settingsInfo.longBreakMinutes * 60
+    );
+  };
 
   return (
     <Sheet
@@ -100,15 +111,63 @@ function Timer() {
         width: '100%'
       }}
     >
-      <CircularProgressbar
-        value={percentage}
-        text={`${minutes}:${seconds}`}
-        styles={buildStyles({
-          textColor:'#fff',
-          pathColor: COLORS[mode],
-          tailColor:'rgba(255,255,255,.2)',
-        })}
-      />
+      <Tabs 
+        value={mode} 
+        onChange={handleModeChange}
+        sx={{
+          bgcolor: 'transparent',
+          mb: 2,
+        }}
+      >
+        <TabList
+          disableUnderline
+          sx={{
+            p: 0.5,
+            borderRadius: 'xl',
+            justifyContent: 'center',
+            '& button': {
+              color: 'white',
+              fontSize: '0.9rem',
+              fontWeight: 500,
+              py: 1,
+              '&.Mui-selected': {
+                bgcolor: 'rgba(255, 255, 255, 0.2)',
+              }
+            }
+          }}
+        > 
+          <Tab value="work" disableIndicator>Work</Tab>
+          <Tab value="shortBreak" disableIndicator>Short Break</Tab>
+          <Tab value="longBreak" disableIndicator>Long Break</Tab>
+        </TabList>
+      </Tabs>
+      <Box sx={{ width: '100%', mb: 3 }}>
+        <LinearProgress
+          determinate
+          variant="soft"
+          value={percentage}
+          sx={{
+            '--LinearProgress-thickness': '4px',
+            '--LinearProgress-radius': '2px',
+            color: COLORS[mode],
+            bgcolor: 'rgba(255, 255, 255, 0.2)',
+            transition: 'width 1s linear',
+          }}
+        />
+      </Box>
+
+      <Box 
+        sx={{
+          textAlign: 'center',
+          color: '#fff',
+          fontSize: '7rem',
+          fontWeight: 'bold',
+          mb: 4,
+          letterSpacing: '4px'
+        }}
+      >
+        {`${minutes}:${seconds}`}
+      </Box>
 
       <Box sx={{ mt: 2 }}>
         <Stack
