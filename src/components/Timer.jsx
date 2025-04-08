@@ -31,8 +31,8 @@ function Timer() {
     const mins = Math.floor(secondsLeft / 60);
     const secs = (secondsLeft % 60).toString().padStart(2, '0');
     const totalSeconds = settingsInfo.mode === 'work' ? settingsInfo.workMinutes * 60 
-                : settingsInfo.mode === 'shortBreak' ? settingsInfo.shortBreakMinutes * 60 
-                : settingsInfo.longBreakMinutes * 60;
+                        : settingsInfo.mode === 'shortBreak' ? settingsInfo.shortBreakMinutes * 60 
+                        : settingsInfo.longBreakMinutes * 60;
     const perc = totalSeconds > 0 ? 100 - Math.round((secondsLeft / totalSeconds) * 100) : 0;
     
     return { minutes: mins, seconds: secs, percentage: perc };
@@ -40,12 +40,13 @@ function Timer() {
 
   const switchMode = useCallback(() => {
     const nextMode = settingsInfo.mode === 'work'
-      ? sessionCount % 4 === 0 ? 'longBreak' : 'shortBreak'
-      : 'work';
+                    ? sessionCount % 4 === 0 
+                    ? 'longBreak' : 'shortBreak'
+                    : 'work';
 
     const nextSeconds = nextMode === 'work' ? settingsInfo.workMinutes * 60
-      : nextMode === 'shortBreak' ? settingsInfo.shortBreakMinutes * 60
-      : settingsInfo.longBreakMinutes * 60;
+                                            : nextMode === 'shortBreak' ? settingsInfo.shortBreakMinutes * 60
+                                            : settingsInfo.longBreakMinutes * 60;
 
     if (settingsInfo.mode === 'work') {
       audioRef.current.play();
@@ -104,7 +105,10 @@ function Timer() {
       sx={{
         fontFamily: 'Arial Rounded MT Bold',
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        padding: '30px 0',
+        padding: {
+          xs: '20px 0',
+          sm: '30px 0' 
+        },
         borderRadius: '6px',
         marginBottom: '20px',
         width: '100%'
@@ -126,9 +130,16 @@ function Timer() {
             justifyContent: 'center',
             '& button': {
               color: 'white',
-              fontSize: '1.1rem',
+              fontSize: {
+                xs: '0.9rem',
+                sm: '1.1rem'
+              },
               fontWeight: 500,
               py: 1,
+              px: {
+                xs: 1,
+                sm: 2
+              },
               '&.Mui-selected': {
                 bgcolor: 'rgba(0, 0, 0, 0.2)',
               }
@@ -159,27 +170,46 @@ function Timer() {
         sx={{
           textAlign: 'center',
           color: '#fff',
-          fontSize: '7rem',
+          fontSize: {
+            xs: '4rem',
+            sm: '5.5rem',
+            md: '7rem'
+          },
           fontWeight: 'bold',
-          mb: 4,
-          letterSpacing: '4px'
+          mb: {
+            xs: 2,
+            sm: 4
+          },
+          letterSpacing: {
+            xs: '2px',
+            sm: '4px'
+          }
         }}
       >
         {`${minutes}:${seconds}`}
       </Box>
 
-      <Box sx={{ mt: 2, position: 'relative', width: '100%' }}>
-        {/* Main button container */}
+      <Box sx={{ 
+        mt: { 
+          xs: 1,
+          sm: 2
+        }, 
+        position: 'relative', 
+        width: '100%' 
+      }}>
         <Box
           sx={{
             position: 'relative',
             width: '100%',
             display: 'flex',
             justifyContent: 'center',
-            mb: 4
+            mb: {
+              xs: 2,
+              sm: 4
+            }
           }}
         >
-          <Box sx={{ position: 'relative' }}>
+          <Box sx={{ position: 'relative', zIndex: 2 }}>
             <PomodoroButton 
               onClick={() => setIsActive(!isActive)} 
               isActive={isActive}
@@ -190,11 +220,15 @@ function Timer() {
           {isActive && (
             <Stack
               direction="row"
-              spacing={2}
+              spacing={{ xs: 1, sm: 2 }}
               sx={{
                 position: 'absolute',
                 right: '50%',
-                transform: 'translateX(230px)',
+                transform: {
+                  xs: 'translateX(120px)',
+                  sm: 'translateX(140px)',
+                  md: 'translateX(160px)'
+                },
                 display: 'flex',
                 alignItems: 'center',
                 height: '100%'
