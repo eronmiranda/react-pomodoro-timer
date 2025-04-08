@@ -8,11 +8,11 @@ import SettingsContext from './SettingsContext';
 import Stack from '@mui/joy/Stack';
 import Sheet from '@mui/joy/Sheet';
 import Box from '@mui/joy/Box';
-import LinearProgress from '@mui/joy/LinearProgress';
 import Tabs from '@mui/joy/Tabs';
 import TabList from '@mui/joy/TabList';
 import Tab from '@mui/joy/Tab';
 import TimerDisplay from './TimerDisplay';
+import TimerProgress from './TimerProgress';
 
 const COLORS = {
   work: '#ba4949',
@@ -166,20 +166,8 @@ function Timer() {
           <Tab value='longBreak' disableIndicator>Long Break</Tab>
         </TabList>
       </Tabs>
-      <Box sx={{ width: '100%', mb: 3 }}>
-        <LinearProgress
-          determinate
-          variant='soft'
-          value={percentage}
-          sx={{
-            '--LinearProgress-thickness': '4px',
-            '--LinearProgress-radius': '2px',
-            color: 'white',
-            bgcolor: 'rgba(255, 255, 255, 0.2)',
-            transition: 'width 1s linear',
-          }}
-        />
-      </Box>
+
+      <TimerProgress percentage={percentage} />
 
       <TimerDisplay minutes={minutes} seconds={seconds}/>
 
