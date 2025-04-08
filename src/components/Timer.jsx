@@ -22,7 +22,6 @@ const COLORS = {
 function Timer() {
   const settingsInfo = useContext(SettingsContext);
   const [isActive, setIsActive] = useState(false);
-  const [mode, setMode] = useState('work'); // work, short break, long break
   const [secondsLeft, setSecondsLeft] = useState(settingsInfo.workMinutes * 60);
   const [sessionCount, setSessionCount] = useState(1);
   const audioRef = useRef(new Audio('/sounds/work-tone.mp3'));
@@ -31,16 +30,16 @@ function Timer() {
   const { minutes, seconds, percentage } = useMemo(() => {
     const mins = Math.floor(secondsLeft / 60);
     const secs = (secondsLeft % 60).toString().padStart(2, '0');
-    const totalSeconds = mode === 'work' ? settingsInfo.workMinutes * 60 
-                : mode === 'shortBreak' ? settingsInfo.shortBreakMinutes * 60 
+    const totalSeconds = settingsInfo.mode === 'work' ? settingsInfo.workMinutes * 60 
+                : settingsInfo.mode === 'shortBreak' ? settingsInfo.shortBreakMinutes * 60 
                 : settingsInfo.longBreakMinutes * 60;
     const perc = totalSeconds > 0 ? 100 - Math.round((secondsLeft / totalSeconds) * 100) : 0;
     
     return { minutes: mins, seconds: secs, percentage: perc };
-  }, [secondsLeft, mode, settingsInfo]);
+  }, [secondsLeft, settingsInfo]);
 
   const switchMode = useCallback(() => {
-    const nextMode = mode === 'work'
+    const nextMode = settingsInfo.mode === 'work'
       ? sessionCount % 4 === 0 ? 'longBreak' : 'shortBreak'
       : 'work';
 
@@ -48,14 +47,14 @@ function Timer() {
       : nextMode === 'shortBreak' ? settingsInfo.shortBreakMinutes * 60
       : settingsInfo.longBreakMinutes * 60;
 
-    if (mode === 'work') {
+    if (settingsInfo.mode === 'work') {
       audioRef.current.play();
     }
 
-    setMode(nextMode);
+    settingsInfo.setMode(nextMode);
     setSecondsLeft(nextSeconds);
-    setSessionCount(count => mode === 'work' ? count : count + 1);
-  }, [mode, sessionCount, settingsInfo]);
+    setSessionCount(count => settingsInfo.mode === 'work' ? count : count + 1);
+  }, [sessionCount, settingsInfo]);
 
   useEffect(() => {
     let interval = null;
@@ -75,13 +74,13 @@ function Timer() {
   }, [isActive, switchMode]);
 
   useEffect(() => {
-    document.title = `${minutes}:${seconds} - ${mode === 'work' ? 'Work' : mode === 'shortBreak' ? 'Short Break' : 'Long Break'}`;
+    document.title = `${minutes}:${seconds} - ${settingsInfo.mode === 'work' ? 'Work' : settingsInfo.mode === 'shortBreak' ? 'Short Break' : 'Long Break'}`;
     return () => { document.title = "Pomodoro Timer"; };
-  }, [minutes, seconds, mode]);
+  }, [minutes, seconds, settingsInfo.mode]);
 
   const handleStop = () => {
     setIsActive(!isActive);
-    setMode('work');
+    settingsInfo.setMode('work');
     setSecondsLeft(settingsInfo.workMinutes * 60);
     setSessionCount(1);
   };
@@ -91,7 +90,7 @@ function Timer() {
     switchMode();
   };
   const handleModeChange = (event, newMode) => {
-    setMode(newMode);
+    settingsInfo.setMode(newMode);
     setSecondsLeft(
       newMode === 'work' ? settingsInfo.workMinutes * 60 :
       newMode === 'shortBreak' ? settingsInfo.shortBreakMinutes * 60 :
@@ -105,14 +104,14 @@ function Timer() {
       sx={{
         fontFamily: 'Arial Rounded MT Bold',
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        padding: '30px 70px',
+        padding: '30px 0',
         borderRadius: '6px',
         marginBottom: '20px',
         width: '100%'
       }}
     >
       <Tabs 
-        value={mode} 
+        value={settingsInfo.mode} 
         onChange={handleModeChange}
         sx={{
           bgcolor: 'transparent',
@@ -127,11 +126,11 @@ function Timer() {
             justifyContent: 'center',
             '& button': {
               color: 'white',
-              fontSize: '0.9rem',
+              fontSize: '1.1rem',
               fontWeight: 500,
               py: 1,
               '&.Mui-selected': {
-                bgcolor: 'rgba(255, 255, 255, 0.2)',
+                bgcolor: 'rgba(0, 0, 0, 0.2)',
               }
             }
           }}
@@ -149,7 +148,7 @@ function Timer() {
           sx={{
             '--LinearProgress-thickness': '4px',
             '--LinearProgress-radius': '2px',
-            color: COLORS[mode],
+            color: 'white',
             bgcolor: 'rgba(255, 255, 255, 0.2)',
             transition: 'width 1s linear',
           }}
@@ -182,7 +181,7 @@ function Timer() {
           <PomodoroButton 
             onClick={() => setIsActive(!isActive)} 
             isActive={isActive}
-            color={COLORS[mode]}
+            color={COLORS[settingsInfo.mode]}
           />
 
           {isActive && (
