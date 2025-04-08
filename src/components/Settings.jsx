@@ -1,6 +1,6 @@
-import SettingsContext from "./SettingsContext";
-import {useContext} from "react";
-import BackButton from "./BackButton";
+import SettingsContext from './SettingsContext';
+import {useContext} from 'react';
+import BackButton from './BackButton';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
@@ -75,7 +75,7 @@ function Settings() {
 
   return(
     <Sheet
-      variant="soft"
+      variant='soft'
       sx={{
         textAlign: 'left',
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
@@ -89,7 +89,7 @@ function Settings() {
         {timerSettings.map(({ label, value, setValue, color }) => (
           <Stack key={value} spacing={2}>
             <Typography 
-              level="h4" 
+              level='h4' 
               sx={{ 
                 color: 'rgb(255, 255, 255)',
                 letterSpacing: '0.5px',
@@ -98,14 +98,14 @@ function Settings() {
               {label}
             </Typography>
             <Stack 
-              direction="row" 
+              direction='row' 
               spacing={2}
             >
               <Input
-                type="number"
+                type='number'
                 value={settingsInfo[value]}
                 onChange={(e) => handleValueChange(setValue, e.target.value)}
-                endDecorator=":00"
+                endDecorator=':00'
                 sx={{
                   ...inputStyles,
                   '--Input-focusedHighlight': color,
@@ -128,7 +128,7 @@ function Settings() {
                   ...sliderStyles(color),
                   flex: 1
                 }}
-                size="lg"
+                size='lg'
               />
 
             </Stack>
@@ -136,8 +136,8 @@ function Settings() {
         ))}
         
         <Stack 
-          direction="row" 
-          justifyContent="center"
+          direction='row' 
+          justifyContent='center'
         >
           <BackButton onClick={() => settingsInfo.setShowSettings(!settingsInfo.setShowSettings)} />
         </Stack>

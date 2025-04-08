@@ -5,19 +5,19 @@ function StopButton(props) {
   return (
     <IconButton
       {...props}
-      variant="plain"
+      variant='plain'
       sx={{
-        fontSize: "1.2rem",
+        fontSize: '1.2rem',
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        color: "white",
-        width: "45px",
-        height: "45px",
-        borderRadius: "10px",
-        transition: "all 0.2s ease",
-        "&:hover": {
+        color: 'white',
+        width: '45px',
+        height: '45px',
+        borderRadius: '10px',
+        transition: 'all 0.2s ease',
+        '&:hover': {
           backgroundColor: 'rgba(255, 255, 255, 0.2)',
         },
-        "&:active": {
+        '&:active': {
           backgroundColor: 'rgba(255, 255, 255, 0.15)',
         },
         ...props.sx

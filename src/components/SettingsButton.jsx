@@ -5,7 +5,7 @@ function SettingsButton(props) {
   return (
     <IconButton
       onClick={props.onClick}
-      variant="plain"
+      variant='plain'
       sx={{
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         borderRadius: '50%',

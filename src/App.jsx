@@ -1,8 +1,8 @@
-import {useState} from "react";
+import {useState} from 'react';
 import Box from '@mui/joy/Box';
-import Timer from "./components/Timer";
-import Settings from "./components/Settings";
-import SettingsContext from "./components/SettingsContext";
+import Timer from './components/Timer';
+import Settings from './components/Settings';
+import SettingsContext from './components/SettingsContext';
 
 const COLORS = {
   work: '#ba4949',

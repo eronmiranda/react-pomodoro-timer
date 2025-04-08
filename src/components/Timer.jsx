@@ -1,10 +1,10 @@
 import 'react-circular-progressbar/dist/styles.css';
-import PomodoroButton from "./PomodoroButton";
-import SettingsButton from "./SettingsButton";
+import PomodoroButton from './PomodoroButton';
+import SettingsButton from './SettingsButton';
 import StopButton from './StopButton';
-import NextButton from "./NextButton";
-import {useContext, useState, useEffect, useCallback, useRef, useMemo} from "react";
-import SettingsContext from "./SettingsContext";
+import NextButton from './NextButton';
+import {useContext, useState, useEffect, useCallback, useRef, useMemo} from 'react';
+import SettingsContext from './SettingsContext';
 import Stack from '@mui/joy/Stack';
 import Sheet from '@mui/joy/Sheet';
 import Box from '@mui/joy/Box';
@@ -76,7 +76,7 @@ function Timer() {
 
   useEffect(() => {
     document.title = `${minutes}:${seconds} - ${settingsInfo.mode === 'work' ? 'Work' : settingsInfo.mode === 'shortBreak' ? 'Short Break' : 'Long Break'}`;
-    return () => { document.title = "Pomodoro Timer"; };
+    return () => { document.title = 'Pomodoro Timer'; };
   }, [minutes, seconds, settingsInfo.mode]);
 
   const handleStop = () => {
@@ -101,7 +101,7 @@ function Timer() {
 
   return (
     <Sheet
-      variant="soft"
+      variant='soft'
       sx={{
         fontFamily: 'Arial Rounded MT Bold',
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
@@ -146,15 +146,15 @@ function Timer() {
             }
           }}
         > 
-          <Tab value="work" disableIndicator>Work</Tab>
-          <Tab value="shortBreak" disableIndicator>Short Break</Tab>
-          <Tab value="longBreak" disableIndicator>Long Break</Tab>
+          <Tab value='work' disableIndicator>Work</Tab>
+          <Tab value='shortBreak' disableIndicator>Short Break</Tab>
+          <Tab value='longBreak' disableIndicator>Long Break</Tab>
         </TabList>
       </Tabs>
       <Box sx={{ width: '100%', mb: 3 }}>
         <LinearProgress
           determinate
-          variant="soft"
+          variant='soft'
           value={percentage}
           sx={{
             '--LinearProgress-thickness': '4px',
@@ -219,7 +219,7 @@ function Timer() {
 
           {isActive && (
             <Stack
-              direction="row"
+              direction='row'
               spacing={{ xs: 1, sm: 2 }}
               sx={{
                 position: 'absolute',
