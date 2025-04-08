@@ -1,4 +1,3 @@
-// import './App.css';
 import {useState} from "react";
 import Box from '@mui/joy/Box';
 import Timer from "./components/Timer";
