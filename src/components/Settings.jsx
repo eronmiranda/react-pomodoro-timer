@@ -208,7 +208,11 @@ function Settings() {
             mt: { xs: 2, sm: 3 }
           }}
         >
-          <BackButton onClick={() => settingsInfo.setShowSettings(!settingsInfo.setShowSettings)} />
+          <BackButton onClick={() => {
+              settingsInfo.setShowSettings(false);
+              settingsInfo.setMode('work');
+            }} 
+          />
         </Stack>
       </Stack>
     </Sheet>
