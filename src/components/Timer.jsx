@@ -2,9 +2,7 @@ import { useEffect, useCallback } from 'react';
 import { useSettings } from '../context/SettingsContext';
 import { useTimer } from '../hooks/useTimer';
 import Sheet from '@mui/joy/Sheet';
-import Tabs from '@mui/joy/Tabs';
-import TabList from '@mui/joy/TabList';
-import Tab from '@mui/joy/Tab';
+import TimerTabs from './TimerTabs';
 import TimerDisplay from './TimerDisplay';
 import TimerProgress from './TimerProgress';
 import { TimerControls } from './TimerControls';
@@ -61,44 +59,12 @@ function Timer() {
         width: '100%',
       }}
     >
-      <Tabs
-        value={mode}
-        onChange={(_, newMode) => switchMode(newMode)}
-        sx={{ bgcolor: 'transparent', mb: 2 }}
-      >
-        <TabList
-          disableUnderline
-          sx={{
-            p: 0.5,
-            borderRadius: 'xl',
-            justifyContent: 'center',
-            '& button': {
-              color: 'white',
-              fontSize: {
-                xs: '0.9rem',
-                sm: '1.1rem',
-              },
-              fontWeight: 500,
-              py: 1,
-              px: {
-                xs: 1,
-                sm: 2,
-              },
-              '&.Mui-selected': {
-                bgcolor: 'rgba(0, 0, 0, 0.2)',
-              }
-            }
-          }}
-        >
-          <Tab value='work' disableIndicator>Work</Tab>
-          <Tab value='shortBreak' disableIndicator>Short Break</Tab>
-          <Tab value='longBreak' disableIndicator>Long Break</Tab>
-        </TabList>
-      </Tabs>
-
+      <TimerTabs 
+        mode={mode} 
+        onModeChange={switchMode}
+      />
       <TimerProgress percentage={percentage} />
       <TimerDisplay minutes={minutes} seconds={seconds} />
-      
       <TimerControls
         isActive={isActive}
         onToggle={handlePomodoroClick}
