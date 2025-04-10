@@ -2,6 +2,8 @@
 
 A minimalist productivity tool built with React to help maintain focus and manage work sessions effectively. This project was created to explore React's latest features while solving a personal need for a clean, customizable timer.
 
+[View Live Demo Here](https://www.pomodoro.eroniellemiranda.com) 🔗
+
 ## Why Another Pomodoro Timer? 🤔
 
 I wanted to build a distraction-free Pomodoro timer that:
