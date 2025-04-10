@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const COLORS = {
   work: "#ba4949",
@@ -9,11 +9,23 @@ const COLORS = {
 const SettingsContext = createContext();
 
 export function SettingsProvider({ children }) {
+  const [workMinutes, setWorkMinutes] = useState(() => 
+    parseInt(localStorage.getItem('workMinutes')) || 25
+  );
+  const [shortBreakMinutes, setShortBreakMinutes] = useState(() => 
+    parseInt(localStorage.getItem('shortBreakMinutes')) || 5
+  );
+  const [longBreakMinutes, setLongBreakMinutes] = useState(() => 
+    parseInt(localStorage.getItem('longBreakMinutes')) || 15
+  );
+  const [mode, setMode] = useState('work');
   const [showSettings, setShowSettings] = useState(false);
-  const [workMinutes, setWorkMinutes] = useState(25);
-  const [shortBreakMinutes, setShortBreakMinutes] = useState(5);
-  const [longBreakMinutes, setLongBreakMinutes] = useState(15);
-  const [mode, setMode] = useState("work"); // work, short break, long break
+
+  useEffect(() => {
+    localStorage.setItem('workMinutes', workMinutes);
+    localStorage.setItem('shortBreakMinutes', shortBreakMinutes);
+    localStorage.setItem('longBreakMinutes', longBreakMinutes);
+  }, [workMinutes, shortBreakMinutes, longBreakMinutes, mode]);
 
   const value = {
     showSettings,
