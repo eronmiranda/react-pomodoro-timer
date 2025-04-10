@@ -3,8 +3,8 @@ import PomodoroButton from './PomodoroButton';
 import SettingsButton from './SettingsButton';
 import StopButton from './StopButton';
 import NextButton from './NextButton';
-import {useContext, useState, useEffect, useCallback, useRef, useMemo} from 'react';
-import SettingsContext from './SettingsContext';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useSettings } from '../context/SettingsContext';
 import Stack from '@mui/joy/Stack';
 import Sheet from '@mui/joy/Sheet';
 import Box from '@mui/joy/Box';
@@ -14,16 +14,19 @@ import Tab from '@mui/joy/Tab';
 import TimerDisplay from './TimerDisplay';
 import TimerProgress from './TimerProgress';
 
-const COLORS = {
-  work: '#ba4949',
-  shortBreak: '#518a58',
-  longBreak: '#397097'
-};
-
 function Timer() {
-  const settingsInfo = useContext(SettingsContext);
+  const {
+    mode,
+    setMode,
+    workMinutes,
+    shortBreakMinutes,
+    longBreakMinutes,
+    setShowSettings,
+    colors,
+  } = useSettings();
+
   const [isActive, setIsActive] = useState(false);
-  const [secondsLeft, setSecondsLeft] = useState(settingsInfo.workMinutes * 60);
+  const [secondsLeft, setSecondsLeft] = useState(workMinutes * 60);
   const [sessionCount, setSessionCount] = useState(1);
   const audioRef = useRef(new Audio('/sounds/work-tone.mp3'));
 
@@ -31,34 +34,39 @@ function Timer() {
   const { minutes, seconds, percentage } = useMemo(() => {
     const mins = Math.floor(secondsLeft / 60);
     const secs = (secondsLeft % 60).toString().padStart(2, '0');
-    const totalSeconds = settingsInfo.mode === 'work' ? settingsInfo.workMinutes * 60 
-                        : settingsInfo.mode === 'shortBreak' ? settingsInfo.shortBreakMinutes * 60 
-                        : settingsInfo.longBreakMinutes * 60;
+    const totalSeconds = mode === 'work' 
+                        ? workMinutes * 60 
+                        : mode === 'shortBreak' 
+                          ? shortBreakMinutes * 60 
+                          : longBreakMinutes * 60;
     const perc = totalSeconds > 0 ? 100 - Math.round((secondsLeft / totalSeconds) * 100) : 0;
-    
+
     return { minutes: mins, seconds: secs, percentage: perc };
-  }, [secondsLeft, settingsInfo]);
+  }, [secondsLeft, mode, workMinutes, shortBreakMinutes, longBreakMinutes]);
 
   const switchMode = useCallback(() => {
-    const nextMode = settingsInfo.mode === 'work'
-                    ? sessionCount % 4 === 0 
-                    ? 'longBreak' : 'shortBreak'
+    const nextMode = mode === 'work'
+                    ? sessionCount % 4 === 0
+                      ? 'longBreak'
+                      : 'shortBreak'
                     : 'work';
 
-    const nextSeconds = nextMode === 'work' ? settingsInfo.workMinutes * 60
-                                            : nextMode === 'shortBreak' ? settingsInfo.shortBreakMinutes * 60
-                                            : settingsInfo.longBreakMinutes * 60;
+    const nextSeconds = nextMode === 'work' 
+                        ? workMinutes * 60
+                        : nextMode === 'shortBreak'
+                          ? shortBreakMinutes * 60
+                          : longBreakMinutes * 60;
 
-    if (settingsInfo.mode === 'work') {
+    if (mode === 'work') {
       audioRef.current.play();
     }
 
     setTimeout(() => {
-      settingsInfo.setMode(nextMode);
+      setMode(nextMode);
       setSecondsLeft(nextSeconds);
-      setSessionCount(count => settingsInfo.mode === 'work' ? count : count + 1);
+      setSessionCount((count) => (mode === 'work' ? count : count + 1));
     }, 0);
-  }, [sessionCount, settingsInfo]);
+  }, [mode, sessionCount, setMode, workMinutes, shortBreakMinutes, longBreakMinutes]);
 
   useEffect(() => {
     let interval = null;
@@ -78,14 +86,19 @@ function Timer() {
   }, [isActive, switchMode]);
 
   useEffect(() => {
-    document.title = `${minutes}:${seconds} - ${settingsInfo.mode === 'work' ? 'Work' : settingsInfo.mode === 'shortBreak' ? 'Short Break' : 'Long Break'}`;
+    document.title = `${minutes}:${seconds} - ${mode === 'work' 
+                                                ? 'Work' 
+                                                : mode === 'shortBreak' 
+                                                  ? 'Short Break' 
+                                                  : 'Long Break'
+                                                }`;
     return () => { document.title = 'Pomodoro Timer'; };
-  }, [minutes, seconds, settingsInfo.mode]);
+  }, [minutes, seconds, mode]);
 
   const handleStop = () => {
     setIsActive(false);
-    settingsInfo.setMode('work');
-    setSecondsLeft(settingsInfo.workMinutes * 60);
+    setMode('work');
+    setSecondsLeft(workMinutes * 60);
     setSessionCount(1);
   };
 
@@ -95,11 +108,13 @@ function Timer() {
   };
 
   const handleModeChange = (event, newMode) => {
-    settingsInfo.setMode(newMode);
+    setMode(newMode);
     setSecondsLeft(
-      newMode === 'work' ? settingsInfo.workMinutes * 60 
-      : newMode === 'shortBreak' ? settingsInfo.shortBreakMinutes * 60 
-      : settingsInfo.longBreakMinutes * 60
+      newMode === 'work'
+        ? workMinutes * 60
+        : newMode === 'shortBreak'
+          ? shortBreakMinutes * 60
+          : longBreakMinutes * 60
     );
     setIsActive(false);
   };
@@ -124,15 +139,15 @@ function Timer() {
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         padding: {
           xs: '20px 0',
-          sm: '30px 0' 
+          sm: '30px 0',
         },
         borderRadius: '6px',
         marginBottom: '20px',
-        width: '100%'
+        width: '100%',
       }}
     >
-      <Tabs 
-        value={settingsInfo.mode} 
+      <Tabs
+        value={mode}
         onChange={handleModeChange}
         sx={{
           bgcolor: 'transparent',
@@ -149,20 +164,20 @@ function Timer() {
               color: 'white',
               fontSize: {
                 xs: '0.9rem',
-                sm: '1.1rem'
+                sm: '1.1rem',
               },
               fontWeight: 500,
               py: 1,
               px: {
                 xs: 1,
-                sm: 2
+                sm: 2,
               },
               '&.Mui-selected': {
                 bgcolor: 'rgba(0, 0, 0, 0.2)',
               }
             }
           }}
-        > 
+        >
           <Tab value='work' disableIndicator>Work</Tab>
           <Tab value='shortBreak' disableIndicator>Short Break</Tab>
           <Tab value='longBreak' disableIndicator>Long Break</Tab>
@@ -171,10 +186,10 @@ function Timer() {
 
       <TimerProgress percentage={percentage} />
 
-      <TimerDisplay minutes={minutes} seconds={seconds}/>
+      <TimerDisplay minutes={minutes} seconds={seconds} />
 
-      <Box 
-        sx={{ 
+      <Box
+        sx={{
           mt: { xs: 2, sm: 3 },
           display: 'flex',
           flexDirection: 'column',
@@ -194,24 +209,24 @@ function Timer() {
           {isActive ? (
             <>
               <StopButton onClick={handleStop} />
-              <PomodoroButton 
-                onClick={() => setIsActive(!isActive)} 
+              <PomodoroButton
+                onClick={() => setIsActive(!isActive)}
                 isActive={isActive}
-                color={COLORS[settingsInfo.mode]}
+                color={colors[mode]}
                 aria-label={`${isActive ? 'Pause' : 'Start'} timer (Space)`}
               />
               <NextButton onClick={handleNext} />
             </>
           ) : (
-            <PomodoroButton 
-              onClick={() => setIsActive(!isActive)} 
+            <PomodoroButton
+              onClick={() => setIsActive(!isActive)}
               isActive={isActive}
-              color={COLORS[settingsInfo.mode]}
+              color={colors[mode]}
               aria-label={`${isActive ? 'Pause' : 'Start'} timer (Space)`}
             />
           )}
         </Stack>
-        <SettingsButton onClick={() => settingsInfo.setShowSettings(true)} />
+        <SettingsButton onClick={() => setShowSettings(true)} />
       </Box>
     </Sheet>
   );
