@@ -25,8 +25,6 @@ export default [
       ...reactHooks.configs.recommended.rules,
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-      'quotes': ['error', 'single', { 'avoidEscape': true }],
-      'jsx-quotes': ['error', 'prefer-single'],
       'semi': ['error', 'always'],
     },
   },

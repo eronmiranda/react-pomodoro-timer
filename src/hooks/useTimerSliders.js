@@ -1,4 +1,4 @@
-import { useSettings } from '../context/SettingsContext';
+import { useSettings } from "../context/SettingsContext";
 
 export function useTimerSliders() {
   const {
@@ -7,20 +7,22 @@ export function useTimerSliders() {
     shortBreakMinutes,
     setShortBreakMinutes,
     longBreakMinutes,
-    setLongBreakMinutes
+    setLongBreakMinutes,
   } = useSettings();
 
-  const getTimerValue = (key) => ({
-    workMinutes: workMinutes,
-    shortBreakMinutes: shortBreakMinutes,
-    longBreakMinutes: longBreakMinutes
-  })[key];
+  const getTimerValue = (key) =>
+    ({
+      workMinutes: workMinutes,
+      shortBreakMinutes: shortBreakMinutes,
+      longBreakMinutes: longBreakMinutes,
+    })[key];
 
-  const getTimerSetter = (key) => ({
-    workMinutes: setWorkMinutes,
-    shortBreakMinutes: setShortBreakMinutes,
-    longBreakMinutes: setLongBreakMinutes
-  })[key];
+  const getTimerSetter = (key) =>
+    ({
+      workMinutes: setWorkMinutes,
+      shortBreakMinutes: setShortBreakMinutes,
+      longBreakMinutes: setLongBreakMinutes,
+    })[key];
 
   return { getTimerValue, getTimerSetter };
 }
