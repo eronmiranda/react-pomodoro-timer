@@ -1,10 +1,10 @@
 import { useSettings } from '../context/SettingsContext';
-import { useTimerControls } from '../hooks/useTimerControls';
+import { useTimerSliders } from '../hooks/useTimerSliders';
 import BackButton from './BackButton';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 import Box from '@mui/joy/Box';
-import TimerControl from './TimerControl';
+import TimerSliders from './TimerSliders';
 
 const timerSettings = [
   { label: 'Work', value: 'workMinutes', color: '#ba4949' },
@@ -14,7 +14,7 @@ const timerSettings = [
 
 function Settings() {
   const { setShowSettings, setMode } = useSettings();
-  const { getTimerValue, getTimerSetter } = useTimerControls();
+  const { getTimerValue, getTimerSetter } = useTimerSliders();
 
   const handleValueChange = (value, newValue) => {
     const setValue = getTimerSetter(value);
@@ -59,7 +59,7 @@ function Settings() {
           }}
         >
           {timerSettings.map(({ label, value, color }) => (
-            <TimerControl
+            <TimerSliders
               key={value}
               label={label}
               value={value}

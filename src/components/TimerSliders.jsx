@@ -4,7 +4,7 @@ import Stack from '@mui/joy/Stack';
 import Box from '@mui/joy/Box';
 import Typography from '@mui/joy/Typography';
 
-function TimerControl({ label, color, currentValue, onValueChange }) {
+function TimerSliders({ label, color, currentValue, onValueChange }) {
   return (
     <Stack spacing={{ xs: 1, sm: 1.5 }} sx={{ width: '100%' }}>
       <Typography
@@ -84,4 +84,4 @@ function TimerControl({ label, color, currentValue, onValueChange }) {
   );
 }
 
-export default TimerControl;
+export default TimerSliders;

@@ -1,6 +1,6 @@
 import { useSettings } from '../context/SettingsContext';
 
-export function useTimerControls() {
+export function useTimerSliders() {
   const {
     workMinutes,
     setWorkMinutes,
