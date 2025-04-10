@@ -27,6 +27,7 @@ bun run dev
 ## Tech Stack 🛠️
 
 - **React** - for building the UI
+- **Bun** - for JavaScript runtime and package manager for fast development
 - **JoyUI** - for consistent component look and design
 - **Vite** - For lightning-fast development
 - **LocalStorage** - for persistence without a backend
@@ -62,6 +63,35 @@ bun run format
 # Build for production
 bun run build
 ```
+
+## Docker Setup 🐳
+
+The project includes Docker support for easy deployment. You can run the timer using either Docker directly or Docker Compose.
+
+### Using Docker Compose (Recommended)
+
+```bash
+# Build and start the container
+docker compose up -d
+
+# Stop the container
+docker compose down
+```
+
+### Using Docker Directly
+
+```bash
+# Build the Docker image
+docker build -t pomodoro-timer .
+
+# Run the container
+docker run -d -p 4020:80 --name pomodoro pomodoro-timer
+
+# Stop the container
+docker stop pomodoro
+```
+
+The app will be available at `http://localhost:4020`
 
 ---
 
