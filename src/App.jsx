@@ -1,7 +1,30 @@
+import { lazy, Suspense } from "react";
 import Box from "@mui/joy/Box";
-import Timer from "./components/Timer";
-import Settings from "./components/Settings";
+import CircularProgress from "@mui/joy/CircularProgress";
 import { SettingsProvider, useSettings } from "./context/SettingsContext";
+
+const Timer = lazy(() => import("./components/Timer"));
+const Settings = lazy(() => import("./components/Settings"));
+
+const LoadingSpinner = () => (
+  <Box
+    sx={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100vh",
+    }}
+  >
+    <CircularProgress 
+      size="lg"
+      variant="soft"
+      sx={{ 
+        '--CircularProgress-trackColor': 'rgba(255, 255, 255, 0.2)',
+        '--CircularProgress-progressColor': 'white',
+      }}
+    />
+  </Box>
+);
 
 function PomodoroApp() {
   const { showSettings, color } = useSettings();
@@ -21,7 +44,9 @@ function PomodoroApp() {
           padding: "45px 12px",
         }}
       >
-        {showSettings ? <Settings /> : <Timer />}
+        <Suspense fallback={<LoadingSpinner />}>
+          {showSettings ? <Settings /> : <Timer />}
+        </Suspense>
       </Box>
     </main>
   );
