@@ -57,7 +57,6 @@ function Timer() {
         backgroundColor: "rgba(255, 255, 255, 0.1)",
         padding: { xs: "20px 0", sm: "30px 0" },
         borderRadius: "6px",
-        width: "100%",
       }}
     >
       <TimerTabs mode={mode} onModeChange={switchMode} />

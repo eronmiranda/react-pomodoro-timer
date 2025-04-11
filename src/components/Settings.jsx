@@ -45,8 +45,6 @@ function Settings() {
           width: "100%",
           maxWidth: { sm: "500px", md: "600px" },
           margin: "0 auto",
-          minHeight: { xs: "350px", sm: "400px" },
-          overflow: "hidden",
           boxSizing: "border-box",
         }}
       >
