@@ -4,12 +4,12 @@ import Settings from "./components/Settings";
 import { SettingsProvider, useSettings } from "./context/SettingsContext";
 
 function PomodoroApp() {
-  const { showSettings, mode, colors } = useSettings();
+  const { showSettings, color } = useSettings();
 
   return (
     <main
       style={{
-        backgroundColor: colors[mode],
+        backgroundColor: color,
         minHeight: "100vh",
         transition: "background-color 0.3s ease-in-out",
       }}

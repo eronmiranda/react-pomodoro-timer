@@ -38,7 +38,7 @@ export function SettingsProvider({ children }) {
     setLongBreakMinutes,
     mode,
     setMode,
-    colors: COLORS,
+    color: COLORS[mode],
   };
 
   return (

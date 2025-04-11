@@ -8,7 +8,7 @@ export function useTimer() {
     workMinutes,
     shortBreakMinutes,
     longBreakMinutes,
-    colors,
+    color,
   } = useSettings();
 
   const [isActive, setIsActive] = useState(false);
@@ -97,6 +97,6 @@ export function useTimer() {
     mode,
     sessionCount,
     switchMode,
-    color: colors[mode],
+    color: color,
   };
 }
