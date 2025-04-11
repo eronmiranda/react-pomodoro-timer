@@ -8,6 +8,7 @@ function TimerProgress(props) {
         determinate
         variant="soft"
         value={props.percentage}
+        aria-label="Timer progress"
         sx={{
           "--LinearProgress-thickness": "4px",
           "--LinearProgress-radius": "2px",
