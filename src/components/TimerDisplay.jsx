@@ -1,8 +1,10 @@
 import Box from "@mui/joy/Box";
+import { memo } from 'react';
 
-function TimerDisplay(props) {
+const TimerDisplay = memo(function TimerDisplay(props) {
   return (
     <Box
+      aria-live="polite"
       sx={{
         textAlign: "center",
         color: "#fff",
@@ -14,6 +16,6 @@ function TimerDisplay(props) {
       {`${props.minutes}:${props.seconds}`}
     </Box>
   );
-}
+});
 
 export default TimerDisplay;
