@@ -39,7 +39,6 @@ export function TimerControls({
               onClick={onToggle}
               isActive={isActive}
               color={color}
-              aria-label={`${isActive ? "Pause" : "Start"} timer (Space)`}
             />
             <NextButton onClick={onNext} />
           </>
@@ -48,7 +47,6 @@ export function TimerControls({
             onClick={onToggle}
             isActive={isActive}
             color={color}
-            aria-label={`${isActive ? "Pause" : "Start"} timer (Space)`}
           />
         )}
       </Stack>

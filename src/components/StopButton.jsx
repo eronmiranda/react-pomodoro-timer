@@ -6,6 +6,7 @@ function StopButton(props) {
     <IconButton
       {...props}
       variant="plain"
+      aria-label="Stop timer"
       sx={{
         fontSize: "1.2rem",
         backgroundColor: "rgba(255, 255, 255, 0.1)",

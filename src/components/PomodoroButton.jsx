@@ -5,6 +5,7 @@ function PomodoroButton({ isActive, ...props }) {
     <Button
       variant="solid"
       size="lg"
+      aria-label={`${isActive ? "Pause" : "Start"} timer (Space)`}
       sx={{
         fontSize: "1.5rem",
         fontWeight: "bold",

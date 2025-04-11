@@ -21,6 +21,7 @@ function SettingsButton(props) {
           transform: "translateY(4px)",
         },
       }}
+      aria-label="Open settings"
     >
       <Settings />
     </IconButton>
