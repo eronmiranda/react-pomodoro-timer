@@ -16,7 +16,6 @@ export function TimerControls({
   return (
     <Box
       sx={{
-        mt: { xs: 2, sm: 3 },
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
