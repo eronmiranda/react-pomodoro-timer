@@ -8,12 +8,13 @@ export function useTimer() {
     workMinutes,
     shortBreakMinutes,
     longBreakMinutes,
+    sessionCount,
+    setSessionCount,
     color,
   } = useSettings();
 
   const [isActive, setIsActive] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(workMinutes * 60);
-  const [sessionCount, setSessionCount] = useState(1);
   const audioRef = useRef(new Audio("/sounds/work-tone.mp3"));
 
   const { minutes, seconds, percentage } = useMemo(() => {
@@ -66,6 +67,7 @@ export function useTimer() {
       mode,
       sessionCount,
       setMode,
+      setSessionCount,
       workMinutes,
       shortBreakMinutes,
       longBreakMinutes,

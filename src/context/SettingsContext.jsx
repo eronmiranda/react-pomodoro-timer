@@ -20,6 +20,7 @@ export function SettingsProvider({ children }) {
   );
   const [mode, setMode] = useState("work");
   const [showSettings, setShowSettings] = useState(false);
+  const [sessionCount, setSessionCount] = useState(1);
 
   useEffect(() => {
     localStorage.setItem("workMinutes", workMinutes);
@@ -38,6 +39,9 @@ export function SettingsProvider({ children }) {
     setLongBreakMinutes,
     mode,
     setMode,
+    sessionCount,
+    setSessionCount,
+    
     color: COLORS[mode],
   };
 
