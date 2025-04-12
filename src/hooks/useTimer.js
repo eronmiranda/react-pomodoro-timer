@@ -39,23 +39,26 @@ export function useTimer() {
       const nextMode =
         newMode ||
         (mode === "work"
-          ? sessionCount % 4 === 0
+          ? sessionCount % 4 === 0 // enters to long break every 4th session
             ? "longBreak"
             : "shortBreak"
           : "work");
-
+      
+      // calculate the next seconds based on the mode
       const nextSeconds =
         nextMode === "work"
           ? workMinutes * 60
           : nextMode === "shortBreak"
             ? shortBreakMinutes * 60
             : longBreakMinutes * 60;
-
+      
+      // play the audio only when switching from work to short break mode
       if (!newMode && mode === "work") {
         audioRef.current.play();
         setSessionCount((count) => count + 1);
       }
 
+      // if the new mode is provided, pause the timer.
       if (newMode) {
         setIsActive(false);
       }
