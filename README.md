@@ -1,100 +1,48 @@
-# Personal Pomodoro Timer 🍅
+# My Pomodoro Timer 🍅
 
-A minimalist productivity tool built with React to help maintain focus and manage work sessions effectively. This project was created to explore React's latest features while solving a personal need for a clean, customizable timer.
+I built this because I was tired of cluttered productivity apps. Sometimes you just need a simple timer that works.
 
-[View Live Demo Here](https://www.pomodoro.eroniellemiranda.com) 🔗
+[Try it out →](https://www.pomodoro.eroniellemiranda.com)
 
-## Why Another Pomodoro Timer? 🤔
+## What it does
 
-I wanted to build a distraction-free Pomodoro timer that:
-
-- Remembers my preferred settings
-- Doesn't require an account
+- 25-minute work sessions, 5-minute breaks (you know the drill)
+- Remembers your settings
 - Works offline
-- Has a clean, minimalist UI
+- No accounts, no tracking, no nonsense
 
-## Getting Started 🚀
+## Running it locally
 
 ```bash
-# Clone the repository and navigat to project dir
-git clone https://github.com/eronmiranda/react-pomodoro-timer.git && cd react-pomodoro-timer
-
-# Install dependencies
+git clone https://github.com/eronmiranda/react-pomodoro-timer.git
+cd react-pomodoro-timer
 bun install
-
-# Start dev server
 bun run dev
 ```
 
-## Tech Stack 🛠️
+That's it. Open your browser and start focusing.
 
-- **React** - for building the UI
-- **Bun** - for JavaScript runtime and package manager for fast development
-- **JoyUI** - for consistent component look and design
-- **Vite** - For lightning-fast development
-- **LocalStorage** - for persistence without a backend
+## What I used
 
-## Project Structure 📁
+React, Bun, JoyUI, and Vite. Keeps your settings in localStorage so they stick around.
 
-```bash
-src/
-├── components/       # reusable UI components
-├── context/          # global state management
-├── hooks/            # custom react hooks
-```
+## Want to help?
 
-## Future Improvements 🚧
+Feel free to fork it, break it, fix it. Here's what I'm thinking about adding:
 
-- [ ] Add PWA support
-- [ ] Add notifications
-- [ ] Implement more keyboard shortcuts
-- [ ] Add custom sound themes
-- [ ] Include productivity statistics tracking and dashboard
-- [ ] Add Task/Todo tracking
-- [ ] Provide theme customization
+- Notifications when sessions end
+- Different sound options
+- Maybe some basic stats
+- PWA support so it works like a real app
 
-## Development 💻
+## Docker if you're into that
 
 ```bash
-# Start development
-bun run dev
-
-# Run prettier to format code
-bun run format
-
-# Build for production
-bun run build
-```
-
-## Docker Setup 🐳
-
-The project includes Docker support for easy deployment. You can run the timer using either Docker directly or Docker Compose.
-
-### Using Docker Compose (Recommended)
-
-```bash
-# Build and start the container
 docker compose up -d
-
-# Stop the container
-docker compose down
 ```
 
-### Using Docker Directly
-
-```bash
-# Build the Docker image
-docker build -t pomodoro-timer .
-
-# Run the container
-docker run -d -p 4020:80 --name pomodoro pomodoro-timer
-
-# Stop the container
-docker stop pomodoro
-```
-
-The app will be available at `http://localhost:4020`
+Visit `http://localhost:4020` and you're good to go.
 
 ---
 
-Built with ☕️ by [@eronmiranda](https://github.com/eronmiranda)
+Made by me (with ☕️), [@eronmiranda](https://github.com/eronmiranda), when I should have been using a Pomodoro timer instead of building one.
